@@ -8,11 +8,13 @@ import { useSignOutAccount } from "@/lib/react-query/queriesAndMutation";
 const Topbar = () => {
   const navigate = useNavigate();
   const { user } = useUserContext();
-  const { mutate: signOut, isSuccess } = useSignOutAccount();
+  const { mutate: signOut, isSuccess, } = useSignOutAccount();
 
   useEffect(() => {
-    if (isSuccess) navigate(0);
-  }, [isSuccess]);
+    if (isSuccess) {
+      navigate(0);
+    }
+  }, [isSuccess, navigate]);
 
   return (
     <section className="topbar">

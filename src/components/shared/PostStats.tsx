@@ -34,8 +34,20 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
   );
 
   useEffect(() => {
-    setIsSaved(!!savedPostRecord);
-  }, [currentUser]);
+    try {
+      if (currentUser) {
+        const savedPostRecord = currentUser.save.find(
+          (record: Models.Document) => record.post.$id === post.$id
+        );
+  
+        setIsSaved(!!savedPostRecord);
+      }
+    } catch (error) {
+      console.error("Error in useEffect:", error);
+      // Handle the error as needed 
+    }
+  }, [currentUser, post.$id]);
+  
 
   const handleLikePost = (
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
